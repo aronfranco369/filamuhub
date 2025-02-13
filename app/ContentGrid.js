@@ -10,23 +10,26 @@ const ContentGrid = () => {
   if (isError) return <div>Error fetching data</div>;
 
   return (
-    <div className="container mx-auto p-4 space-y-12">
+    <div className="container mx-auto p-4 space-y-8">
       {data?.map(({ category, items }) => (
         <div key={category} className="space-y-4">
           <h2 className="text-2xl font-bold border-b pb-2">{category}</h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
-            {items.map((content) => (
-              <MovieCard
-                key={content.id}
-                imageUrl={content.poster_url}
-                title={content.title}
-                year={content.year}
-                duration={content.file_size}
-                genre={content.genres}
-                director={content.dj}
-                description={content.plot_summary}
-              />
-            ))}
+          <div className="relative">
+            <div className="flex overflow-x-auto pb-4 gap-4 scroll-smooth scrollbar-hide">
+              {items.map((content) => (
+                <div key={content.id} className="flex-none w-[280px]">
+                  <MovieCard
+                    imageUrl={content.poster_url}
+                    title={content.title}
+                    year={content.year}
+                    duration={content.file_size}
+                    genre={content.genres}
+                    director={content.dj}
+                    description={content.plot_summary}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ))}
