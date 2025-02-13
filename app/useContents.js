@@ -4,39 +4,65 @@ import { supabase } from "./supabaseClient";
 
 export const useContents = () => {
   return useQuery({
-    queryKey: ["contents"],
+    queryKey: ["categorized-contents"],
     queryFn: async () => {
-      const { data: contentsData, error: contentsError } = await supabase
+      // Get all distinct combinations of country and type
+      const { data: categories, error: categoriesError } = await supabase
         .from("contents")
-        .select("*");
+        .select("country, type")
+        .not("country", "is", null)
+        .order("country")
+        .order("type");
 
-      if (contentsError) {
-        throw new Error(contentsError.message);
+      if (categoriesError) {
+        throw new Error(categoriesError.message);
       }
 
-      const contentsWithEpisodes = await Promise.all(
-        contentsData.map(async (content) => {
-          let episodes = [];
+      // Remove duplicates (since Supabase doesn't support DISTINCT on multiple columns)
+      const uniqueCategories = Array.from(
+        new Set(categories.map((c) => `${c.country}-${c.type}`))
+      ).map((cat) => {
+        const [country, type] = cat.split("-");
+        return { country, type };
+      });
 
-          if (content.type === "series") {
-            const { data: episodesData, error: episodesError } = await supabase
-              .from("episodes")
-              .select("*")
-              .eq("content_id", content.id);
+      // Fetch 4 items for each category
+      const categoryData = await Promise.all(
+        uniqueCategories.map(async ({ country, type }) => {
+          const { data: items, error: itemsError } = await supabase
+            .from("contents")
+            .select(
+              `
+              id,
+              title,
+              country,
+              type,
+              year,
+              genres,
+              poster_url,
+              plot_summary,
+              dj,
+              file_size
+            `
+            )
+            .eq("country", country)
+            .eq("type", type)
+            .order("created_at", { ascending: false })
+            .limit(4);
 
-            if (!episodesError && episodesData) {
-              episodes = episodesData;
-            }
+          if (itemsError) {
+            console.error(`Error fetching ${country} ${type}:`, itemsError);
+            return null;
           }
 
           return {
-            ...content,
-            episodes,
+            category: `${country} ${type}`.toUpperCase(),
+            items: items || [],
           };
         })
       );
 
-      return contentsWithEpisodes;
+      return categoryData.filter(Boolean);
     },
   });
 };
