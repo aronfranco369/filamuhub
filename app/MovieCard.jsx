@@ -20,6 +20,12 @@ const MovieCard = ({
   return (
     <Card className="h-full w-full transition-all hover:shadow-lg">
       <div className="relative aspect-[2/3] w-full overflow-hidden">
+        {/* DJ Badge at Top-Left */}
+        {director && (
+          <Badge className="absolute top-2 left-2 z-10 bg-black/75 text-white text-xs">
+            {director}
+          </Badge>
+        )}
         <img
           src={imageUrl || "/api/placeholder/400/320"}
           alt={title}
@@ -28,20 +34,22 @@ const MovieCard = ({
       </div>
       <CardHeader className="space-y-1 p-3">
         <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-base line-clamp-1">{title}</CardTitle>
+          <CardTitle className="text-xs sm:text-sm line-clamp-1">
+            {title}
+          </CardTitle>
+
           <span className="text-xs text-gray-500 whitespace-nowrap">
             {year}
           </span>
         </div>
-        {(duration || director) && (
+        {duration && (
           <div className="flex items-center gap-2 text-xs text-gray-500">
-            {duration && <span className="line-clamp-1">{duration}</span>}
-            {duration && director && <span>•</span>}
-            {director && <span className="line-clamp-1">Dir. {director}</span>}
+            <span className="line-clamp-1">{duration}</span>
           </div>
         )}
       </CardHeader>
-      <CardContent className="p-3 pt-0">
+      {/* Conditionally Render Genres and Description */}
+      <CardContent className="p-3 pt-0 hidden sm:block">
         {genre && genre.length > 0 && (
           <div className="mb-2 flex flex-wrap gap-1">
             {genre.slice(0, 2).map((g) => (
