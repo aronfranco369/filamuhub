@@ -18,7 +18,7 @@ export const useContents = () => {
         throw new Error(categoriesError.message);
       }
 
-      // Remove duplicates (since Supabase doesn't support DISTINCT on multiple columns)
+      // Remove duplicates
       const uniqueCategories = Array.from(
         new Set(categories.map((c) => `${c.country}-${c.type}`))
       ).map((cat) => {
@@ -26,23 +26,35 @@ export const useContents = () => {
         return { country, type };
       });
 
-      // Fetch 4 items for each category
+      // Fetch items for each category
       const categoryData = await Promise.all(
         uniqueCategories.map(async ({ country, type }) => {
-          const { data: items, error: itemsError } = await supabase
+          let query = supabase
             .from("contents")
             .select(
               `
               id,
+              external_id,
+              type,
               title,
               country,
-              type,
               year,
               genres,
               poster_url,
               plot_summary,
               dj,
-              file_size
+              season,
+              download_url,
+              file_size,
+              created_at,
+              updated_at,
+              episodes:episodes(
+                id,
+                title,
+                download_url,
+                file_size,
+                created_at
+              )
             `
             )
             .eq("country", country)
@@ -50,14 +62,47 @@ export const useContents = () => {
             .order("created_at", { ascending: false })
             .limit(4);
 
+          const { data: items, error: itemsError } = await query;
+
           if (itemsError) {
             console.error(`Error fetching ${country} ${type}:`, itemsError);
             return null;
           }
 
+          // Process items based on type
+          const processedItems = items.map((item) => {
+            if (item.type === "movie") {
+              // For movies, ensure episodes is an empty array
+              return {
+                ...item,
+                episodes: [],
+                latestEpisode: null,
+              };
+            } else if (item.type === "series") {
+              // For series, find the latest episode if episodes exist
+              const episodes = item.episodes || [];
+              const latestEpisode =
+                episodes.length > 0
+                  ? episodes.reduce((latest, episode) => {
+                      return new Date(episode.created_at) >
+                        new Date(latest.created_at)
+                        ? episode
+                        : latest;
+                    }, episodes[0])
+                  : null;
+
+              return {
+                ...item,
+                episodes,
+                latestEpisode,
+              };
+            }
+            return item;
+          });
+
           return {
             category: `${country} ${type}`.toUpperCase(),
-            items: items || [],
+            items: processedItems || [],
           };
         })
       );

@@ -1,11 +1,9 @@
-// pages/index.js
 import Header from "./Header";
 import ContentGrid from "./ContentGrid";
-import MovieCard from "./MovieCard";
 
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen bg-gray-900 text-white">
       <Header />
       <ContentGrid />
     </div>

@@ -6,6 +6,8 @@ import MovieCard from "./MovieCard";
 const ContentGrid = () => {
   const { data, isLoading, isError } = useContents();
 
+  console.log("Fetched Data:", data);
+
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data</div>;
 
@@ -24,8 +26,9 @@ const ContentGrid = () => {
                   <MovieCard
                     imageUrl={content.poster_url}
                     title={content.title}
-                    year={content.year}
-                    duration={content.file_size}
+                    type={content.type}
+                    created_at={content.created_at}
+                    latestEpisode={content.latestEpisode}
                     genre={content.genres}
                     director={content.dj}
                     description={content.plot_summary}
