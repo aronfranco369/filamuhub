@@ -1,3 +1,4 @@
+// components/ContentGrid.js
 "use client";
 import React from "react";
 import { useContents } from "../useContents";
@@ -30,8 +31,9 @@ const ContentGrid = () => {
           <div className="relative">
             <div className="flex overflow-x-auto pb-4 gap-4 scroll-smooth scrollbar-hide">
               {items.map((content) => (
-                <div
+                <Link
                   key={content.id}
+                  href={`/details/${content.id}`} // Updated to match your dynamic route
                   className="flex-none w-[calc(40%-1rem)] sm:w-[calc(33.33%-1rem)] md:w-[calc(25%-1rem)] lg:w-[calc(20%-1rem)]"
                 >
                   <MovieCard
@@ -44,7 +46,7 @@ const ContentGrid = () => {
                     director={content.dj}
                     description={content.plot_summary}
                   />
-                </div>
+                </Link>
               ))}
             </div>
           </div>

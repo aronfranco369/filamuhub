@@ -60,23 +60,6 @@ const MovieCard = ({
           </div>
         )}
       </CardHeader>
-      {/* Conditionally Render Genres and Description */}
-      <CardContent className="p-3 pt-0 hidden sm:block">
-        {genre && genre.length > 0 && (
-          <div className="mb-2 flex flex-wrap gap-1">
-            {genre.slice(0, 2).map((g) => (
-              <Badge key={g} variant="secondary" className="text-xs px-2 py-0">
-                {g}
-              </Badge>
-            ))}
-          </div>
-        )}
-        {description && (
-          <CardDescription className="line-clamp-2 text-xs text-gray-600">
-            {description}
-          </CardDescription>
-        )}
-      </CardContent>
     </Card>
   );
 };

@@ -1,0 +1,47 @@
+-- Enable UUID extension
+create extension if not exists "uuid-ossp";
+
+-- Modified Contents table with download_url and file_size
+create table contents (
+    id uuid primary key default uuid_generate_v4(),
+    external_id text unique not null,
+    type text not null,
+    title text not null,
+    country text,
+    year text,
+    genres text[],
+    poster_url text,
+    plot_summary text,
+    dj text,
+    season text,
+    download_url text,      -- Added for movies
+    file_size text,         -- Added for movies
+    created_at timestamp with time zone default now(),
+    updated_at timestamp with time zone default now()
+);
+
+-- Episodes table (only for series)
+create table episodes (
+    id uuid primary key default uuid_generate_v4(),
+    content_id uuid references contents(id) on delete cascade,
+    title text not null,    -- Made required since only for series
+    download_url text not null,
+    file_size text not null,
+    created_at timestamp with time zone default now(),
+    updated_at timestamp with time zone default now()
+);
+
+-- Create index for faster lookups
+create index idx_content_id on episodes(content_id);
+create index idx_external_id on contents(external_id);
+
+-- Enable RLS (Row Level Security)
+alter table contents enable row level security;
+alter table episodes enable row level security;
+
+-- Create a basic policy that allows all operations
+create policy "Enable all operations for all users" on contents
+    for all using (true);
+
+create policy "Enable all operations for all users" on episodes
+    for all using (true);
