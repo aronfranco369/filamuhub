@@ -1,5 +1,5 @@
 import Header from "./Header";
-import ContentGrid from "./ContentGrid";
+import ContentGrid from "./components/ContentGrid";
 
 export default function Home() {
   return (

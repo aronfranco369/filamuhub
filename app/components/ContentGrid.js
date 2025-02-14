@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
-import { useContents } from "./useContents";
+import { useContents } from "../useContents";
 import MovieCard from "./MovieCard";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 const ContentGrid = () => {
   const { data, isLoading, isError } = useContents();
@@ -15,7 +17,16 @@ const ContentGrid = () => {
     <div className="container mx-auto p-4 space-y-8">
       {data?.map(({ category, items }) => (
         <div key={category} className="space-y-4">
-          <h2 className="text-2xl font-bold border-b pb-2">{category}</h2>
+          <div className="flex items-center justify-between border-b pb-2">
+            <h2 className="text-2xl font-bold">{category}</h2>
+            <Link
+              href={`/category/${encodeURIComponent(category)}`}
+              className="flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors text-white"
+            >
+              See All
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Link>
+          </div>
           <div className="relative">
             <div className="flex overflow-x-auto pb-4 gap-4 scroll-smooth scrollbar-hide">
               {items.map((content) => (
