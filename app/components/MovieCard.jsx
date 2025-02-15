@@ -28,10 +28,11 @@ const MovieCard = ({
       {/* Glow Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
 
-      <div className="relative aspect-[2/3] w-full overflow-hidden">
-        {/* Director Badge at Top-Left */}
+      {/* Reduced height of image container while maintaining aspect ratio */}
+      <div className="relative aspect-[2/2] w-full overflow-hidden">
+        {/* Smaller director badge */}
         {director && (
-          <Badge className="absolute top-0 left-0 z-10 bg-black/75 text-white text-xs sm:text-sm md:text-base rounded-r-md rounded-l-none px-2 py-1 leading-none">
+          <Badge className="absolute top-0 left-0 z-10 bg-black/75 text-white text-xs rounded-r-md rounded-l-none px-2 py-0.5 leading-none">
             {director}
           </Badge>
         )}
@@ -41,9 +42,11 @@ const MovieCard = ({
           className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
         />
       </div>
-      <CardHeader className="space-y-1 p-3 bg-gray-900">
-        <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-xs sm:text-sm line-clamp-1 text-white">
+
+      {/* Reduced padding in header */}
+      <CardHeader className="space-y-0.5 p-2 bg-gray-900">
+        <div className="flex items-start justify-between gap-1">
+          <CardTitle className="text-xs line-clamp-1 text-white">
             {title}
           </CardTitle>
         </div>
