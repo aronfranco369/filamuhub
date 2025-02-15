@@ -96,6 +96,7 @@ const AllContentPage = () => {
         {data?.map((content) => (
           <div key={content.id} className="flex-none w-[calc(33.33%-1rem)]">
             <MovieCard
+              id={content.id}
               imageUrl={content.poster_url}
               title={content.title}
               type={content.type}
