@@ -3,7 +3,7 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../supabaseClient";
-import MovieCard from "./MovieCard";
+import GridLayout from "./GridLayout";
 
 const fetchCategoryContents = async (category) => {
   const [country, type] = category.split(" ").map((str) => str.toLowerCase());
@@ -92,23 +92,7 @@ const AllContentPage = () => {
           {decodeURIComponent(category)}
         </h1>
       </div>
-      <div className="flex flex-wrap gap-4">
-        {data?.map((content) => (
-          <div key={content.id} className="flex-none w-[calc(33.33%-1rem)]">
-            <MovieCard
-              id={content.id}
-              imageUrl={content.poster_url}
-              title={content.title}
-              type={content.type}
-              created_at={content.created_at}
-              latestEpisode={content.latestEpisode}
-              genre={content.genres}
-              director={content.dj}
-              description={content.plot_summary}
-            />
-          </div>
-        ))}
-      </div>
+      <GridLayout data={data} />
     </div>
   );
 };
