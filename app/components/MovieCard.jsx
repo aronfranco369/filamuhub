@@ -28,12 +28,12 @@ const MovieCard = ({
 
   return (
     <Link href={`/details/${id}`}>
-      <Card className="h-full w-full transition-all hover:shadow-lg relative overflow-hidden group">
+      <Card className="h-full w-300px transition-all hover:shadow-lg relative overflow-hidden group">
         {/* Glow Effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
 
         {/* Image container with aspect ratio */}
-        <div className="relative aspect-[2/2] w-full overflow-hidden">
+        <div className="relative aspect-[2/3] w-full overflow-hidden">
           {/* Director badge */}
           {director && (
             <Badge className="absolute top-0 left-0 z-10 bg-black/75 text-white text-xs rounded-r-md rounded-l-none px-2 py-0.5 leading-none">
@@ -48,7 +48,7 @@ const MovieCard = ({
           <img
             src={imageUrl || "/api/placeholder/400/320"}
             alt={title}
-            className={`h-full w-full object-cover transition-transform duration-200 group-hover:scale-105 ${
+            className={`h-full w-full object-cover transition-transform duration-200 group-hover:scale-110 ${
               imageLoaded ? "block" : "hidden"
             }`}
             onLoad={() => setImageLoaded(true)}
@@ -56,7 +56,7 @@ const MovieCard = ({
         </div>
 
         {/* Card Header */}
-        <CardHeader className="space-y-0.5 p-2 bg-gray-900">
+        <CardHeader className="space-y-0.9 p-2 bg-gray-900">
           <div className="flex items-start justify-between gap-1">
             <CardTitle className="text-xs line-clamp-1 text-white">
               {title}

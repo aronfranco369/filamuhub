@@ -30,7 +30,7 @@ const HomeCategory = ({ category, items }) => {
           {items.map((content) => (
             <div
               key={content.id}
-              className="flex-none w-[calc(30%-0.5rem)] h-2rem sm:w-[calc(33.33%-0.5rem)] md:w-[calc(25%-0.5rem)] lg:w-[calc(20%-0.5rem)]"
+              className="flex-none w-[calc(35%-0.5rem)] h-2rem sm:w-[calc(45%-0.5rem)] md:w-[calc(30%-0.5rem)] lg:w-[calc(50%-0.5rem)]"
             >
               <MovieCard
                 id={content.id}

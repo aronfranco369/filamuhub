@@ -19,7 +19,6 @@ const SearchInput = ({ onSearch }) => {
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
     if (!isSearchOpen) {
-      // Focus input when opening search
       setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
@@ -37,7 +36,6 @@ const SearchInput = ({ onSearch }) => {
     setIsSearchOpen(false);
   };
 
-  // Auto-focus when search opens
   useEffect(() => {
     if (isSearchOpen) {
       inputRef.current?.focus();
@@ -46,20 +44,19 @@ const SearchInput = ({ onSearch }) => {
 
   return (
     <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-800">
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between">
           <div className="w-auto">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-100 to-gray-400 bg-clip-text text-transparent">
               Filamu Hub
             </h1>
           </div>
-
           <div className="flex items-center flex-1 justify-end">
             <div
               className={`
                 flex items-center relative
                 transition-all duration-300 ease-in-out
-                ${isSearchOpen ? "w-full ml-4" : "w-10"}
+                ${isSearchOpen ? "w-3/4 ml-4" : "w-8"}
               `}
             >
               {isSearchOpen && (
@@ -71,15 +68,15 @@ const SearchInput = ({ onSearch }) => {
                     onChange={handleSearch}
                     placeholder="Search titles or DJs..."
                     className="w-full bg-gray-800 text-gray-100 placeholder-gray-500
-                             px-4 py-2 pr-12 outline-none rounded-lg
+                             px-3 py-1.5 pr-10 outline-none rounded-lg
                              shadow-lg shadow-black/20
                              ring-1 ring-gray-700 focus:ring-2 focus:ring-gray-500
-                             transition-all duration-300"
+                             transition-all duration-300 text-sm"
                   />
                   {isTyping && (
                     <Loader2
-                      className="absolute right-12 top-1/2 transform -translate-y-1/2 
-                               h-4 w-4 animate-spin text-gray-400"
+                      className="absolute right-10 top-1/2 transform -translate-y-1/2
+                               h-3 w-3 animate-spin text-gray-400"
                     />
                   )}
                 </div>
@@ -87,7 +84,7 @@ const SearchInput = ({ onSearch }) => {
               <button
                 onClick={searchTerm ? handleClearSearch : toggleSearch}
                 className={`
-                  p-2 rounded-full
+                  p-1.5 rounded-full
                   transition-all duration-300 ease-in-out
                   ${
                     isSearchOpen
@@ -97,9 +94,9 @@ const SearchInput = ({ onSearch }) => {
                 `}
               >
                 {isSearchOpen ? (
-                  <X className="w-6 h-6 text-gray-400 hover:text-gray-300" />
+                  <X className="w-4 h-4 text-gray-400 hover:text-gray-300" />
                 ) : (
-                  <Search className="w-6 h-6 text-gray-400 hover:text-gray-300" />
+                  <Search className="w-4 h-4 text-gray-400 hover:text-gray-300" />
                 )}
               </button>
             </div>

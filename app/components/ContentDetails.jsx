@@ -158,28 +158,21 @@ const ContentDetails = () => {
           content.episodes.map((episode) => (
             <Card key={episode.id} className="bg-gray-800 border-gray-700">
               <div className="flex justify-between items-start p-4">
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
                   <span className="font-semibold text-white">
                     {episode.title}
                   </span>
-                  <div className="flex flex-row gap-4 items-center">
-                    <Badge
-                      variant="outline"
-                      className="border-gray-600 text-gray-300"
-                    >
-                      {episode.file_size}
-                    </Badge>
-                    <span className="text-gray-400 text-sm">
-                      {new Date(episode.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
+                  <span className="text-gray-400 text-xs">
+                    {new Date(episode.created_at).toLocaleDateString()}
+                  </span>
                 </div>
                 <Button
-                  variant="outline"
+                  variant="default"
                   size="sm"
-                  className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white"
+                  className="bg-gray-900 hover:bg-gray-700 text-white flex items-center gap-1 px-2 py-1 text-xs"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-3 h-3" />
+                  <span>{episode.file_size} MB</span>
                 </Button>
               </div>
             </Card>
@@ -187,25 +180,14 @@ const ContentDetails = () => {
         ) : (
           <Card className="bg-gray-800 border-gray-700">
             <div className="flex justify-between items-start p-4">
-              <div className="flex flex-col gap-3">
-                <span className="font-semibold text-white">
-                  {content.title}
-                </span>
-                <div className="flex flex-row gap-4 items-center">
-                  <Badge
-                    variant="outline"
-                    className="border-gray-600 text-gray-300"
-                  >
-                    {content.file_size}
-                  </Badge>
-                </div>
-              </div>
+              <span className="font-semibold text-white">{content.title}</span>
               <Button
-                variant="outline"
+                variant="default"
                 size="sm"
-                className="border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="bg-gray-900 hover:bg-gray-700 text-white flex items-center gap-1 px-2 py-1 text-xs"
               >
-                <Download className="w-4 h-4" />
+                <Download className="w-3 h-3" />
+                <span>{content.file_size} MB</span>
               </Button>
             </div>
           </Card>
