@@ -51,24 +51,21 @@ const Filters = ({ onFilterChange }) => {
   const hasActiveFilters = selectedCountry || selectedGenre || selectedDj;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-4 p-4 rounded-lg">
+    <div className="space-y-2 p-2">
+      <div className="flex items-center space-x-2">
         <Select
           onValueChange={(value) => handleFilterChange("country", value)}
-          value={selectedCountry}
+          value={selectedCountry || ""}
         >
           <SelectTrigger className="w-[180px] bg-gray-800 text-white border-gray-700 focus:ring-gray-700 focus:ring-offset-gray-900">
-            <SelectValue
-              placeholder="Select Country"
-              className="text-gray-400"
-            />
+            <SelectValue placeholder="Country" />
           </SelectTrigger>
           <SelectContent className="bg-gray-800 text-white border-gray-700">
             {filterOptions?.countries.map((country) => (
               <SelectItem
                 key={country}
                 value={country}
-                className="hover:bg-gray-700 focus:bg-gray-700"
+                className="hover:bg-gray-700 focus:bg-gray-700 text-white hover:text-white focus:text-white"
               >
                 {country}
               </SelectItem>
@@ -78,17 +75,17 @@ const Filters = ({ onFilterChange }) => {
 
         <Select
           onValueChange={(value) => handleFilterChange("genre", value)}
-          value={selectedGenre}
+          value={selectedGenre || ""}
         >
           <SelectTrigger className="w-[180px] bg-gray-800 text-white border-gray-700 focus:ring-gray-700 focus:ring-offset-gray-900">
-            <SelectValue placeholder="Select Genre" className="text-gray-400" />
+            <SelectValue placeholder="Genre" />
           </SelectTrigger>
           <SelectContent className="bg-gray-800 text-white border-gray-700">
             {filterOptions?.genres.map((genre) => (
               <SelectItem
                 key={genre}
                 value={genre}
-                className="hover:bg-gray-700 focus:bg-gray-700"
+                className="hover:bg-gray-700 focus:bg-gray-700 text-white hover:text-white focus:text-white"
               >
                 {genre}
               </SelectItem>
@@ -98,36 +95,36 @@ const Filters = ({ onFilterChange }) => {
 
         <Select
           onValueChange={(value) => handleFilterChange("dj", value)}
-          value={selectedDj}
+          value={selectedDj || ""}
         >
           <SelectTrigger className="w-[180px] bg-gray-800 text-white border-gray-700 focus:ring-gray-700 focus:ring-offset-gray-900">
-            <SelectValue placeholder="Select DJ" className="text-gray-400" />
+            <SelectValue placeholder="DJ" />
           </SelectTrigger>
           <SelectContent className="bg-gray-800 text-white border-gray-700">
             {filterOptions?.djs.map((dj) => (
               <SelectItem
                 key={dj}
                 value={dj}
-                className="hover:bg-gray-700 focus:bg-gray-700"
+                className="hover:bg-gray-700 focus:bg-gray-700 text-white hover:text-white focus:text-white"
               >
                 {dj}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-
-        {hasActiveFilters && (
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={clearFilters}
-            className="flex items-center space-x-1 bg-gray-700 hover:bg-gray-600 text-white border-gray-600"
-          >
-            <X className="w-4 h-4" />
-            <span>Clear Filters</span>
-          </Button>
-        )}
       </div>
+
+      {hasActiveFilters && (
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={clearFilters}
+          className="flex items-center space-x-1 bg-gray-700 hover:bg-gray-600 text-white border-gray-600"
+        >
+          <X className="w-4 h-4" />
+          <span>Clear Filters</span>
+        </Button>
+      )}
     </div>
   );
 };

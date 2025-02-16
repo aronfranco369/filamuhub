@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../supabaseClient";
 import GridLayout from "./GridLayout";
+import GridLayoutSkeleton from "./skeltons/GridLayoutSkelton";
 
 const fetchCategoryContents = async (category) => {
   const [country, type] = category.split(" ").map((str) => str.toLowerCase());
@@ -82,7 +83,7 @@ const AllContentPage = () => {
     queryFn: () => fetchCategoryContents(decodeURIComponent(category)),
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <GridLayoutSkeleton />;
   if (isError) return <div>Error fetching data</div>;
 
   return (
