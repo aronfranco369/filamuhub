@@ -5,7 +5,8 @@ export const useSearchQuery = (searchTerm) => {
   return useQuery({
     queryKey: ["search", searchTerm],
     queryFn: async () => {
-      if (!searchTerm || searchTerm.length < 2) return [];
+      // Remove minimum length check
+      if (!searchTerm) return [];
 
       const { data, error } = await supabase
         .from("contents")
@@ -42,7 +43,6 @@ export const useSearchQuery = (searchTerm) => {
         throw new Error(error.message);
       }
 
-      // Process the results similar to useContents
       return data.map((item) => {
         if (item.type === "movie") {
           return {
@@ -71,7 +71,7 @@ export const useSearchQuery = (searchTerm) => {
         return item;
       });
     },
-    enabled: searchTerm?.length >= 2, // Only run query if search term is at least 2 characters
+    enabled: true, // Always enable the query
     staleTime: 1000 * 60 * 5, // Cache results for 5 minutes
   });
 };
