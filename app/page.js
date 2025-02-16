@@ -1,6 +1,4 @@
-import Header from "./components/Header";
 import ContentGrid from "./components/ContentGrid";
-import AnimatedHeader from "./components/AnimatedHeader";
 import SearchInput from "./components/SearchInput";
 
 export default function Home() {

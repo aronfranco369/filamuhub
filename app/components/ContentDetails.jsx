@@ -12,6 +12,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import ContentDetailsSkeleton from "./skeltons/ContentDetailsSketon";
 
 const fetchContentDetails = async (id) => {
   const { data, error } = await supabase
@@ -66,7 +67,6 @@ const fetchContentDetails = async (id) => {
 const ContentDetails = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams();
-  console.log("id:", id);
   const {
     data: content,
     isLoading,
@@ -76,9 +76,7 @@ const ContentDetails = () => {
     queryFn: () => fetchContentDetails(id),
   });
 
-  console.log("Content:", content);
-
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <ContentDetailsSkeleton />;
   if (isError) return <div>Error fetching content details</div>;
   if (!content) return <div>Content not found</div>;
 
@@ -87,15 +85,15 @@ const ContentDetails = () => {
       {/* Top section with image and basic info in row layout */}
       <div className="flex flex-col md:flex-row gap-8 mb-8 w-full">
         {/* Image container taking 1/3 width on larger screens */}
-        <div className="w-full md:w-1/3 h-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div className="w-full md:w-1/3 h-64 sm:h-72 md:h-80 lg:h-96 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           {content.poster_url ? (
             <img
               src={content.poster_url}
               alt={content.title}
-              className="w-full h-auto object-contain md:object-cover"
+              className="w-full h-full object-cover rounded-lg"
             />
           ) : (
-            <div className="text-gray-400 h-[300px] flex items-center justify-center">
+            <div className="text-gray-400 h-full flex items-center justify-center">
               No Image Available
             </div>
           )}

@@ -1,5 +1,3 @@
-// HomeCategory.js
-"use client";
 import React from "react";
 import MovieCard from "./MovieCard";
 import { ChevronRight } from "lucide-react";
@@ -14,7 +12,7 @@ const HomeCategory = ({ category, items }) => {
   };
 
   return (
-    <div key={category} className="space-y-2 bg-gray-800 rounded-lg p-4">
+    <div className="space-y-2 bg-gray-800 rounded-lg p-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold tracking-wide text-gray-100 font-sans">
           {formatCategory(category)}
