@@ -71,7 +71,15 @@ const AppDownloadBanner = () => {
               <div className="flex-1 space-y-2">
                 <Button
                   className="bg-purple-600 hover:bg-purple-700 text-white"
-                  onClick={() => window.open("/path-to-universal-apk.apk")}
+                  onClick={() => {
+                    const link = document.createElement("a");
+                    link.href =
+                      "https://f003.backblazeb2.com/file/tiebooks/filamuhub.apk";
+                    link.setAttribute("download", "FilamuHub.apk");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }}
                 >
                   <Download className="mr-2 h-4 w-4" />
                   FilamuHub.apk
