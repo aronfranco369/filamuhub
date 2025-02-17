@@ -2,9 +2,10 @@
 import { useState } from "react";
 import ContentGrid from "./components/ContentGrid";
 import SearchInput from "./components/SearchInput";
-import { useSearchQuery } from "./useSearchQuery";
+import { useSearchQuery } from "./hooks/useSearchQuery";
 import GridLayout from "./components/GridLayout";
 import { Loader2 } from "lucide-react";
+import AppDownloadBanner from "./components/DownloadApp";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,6 +18,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      {/* <AppDownloadBanner /> */}
       <SearchInput onSearch={handleSearch} />
       <div className="container mx-auto p-4">
         {searchTerm ? (

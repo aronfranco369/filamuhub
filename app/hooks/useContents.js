@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../supabaseClient";
 
 export const useContents = () => {
   return useQuery({

@@ -1,8 +1,7 @@
-// ContentGrid.js
 "use client";
 import React, { useState } from "react";
-import { useContents } from "../useContents";
-import { useFilteredContents } from "../useFilteredContents";
+import { useContents } from "../hooks/useContents";
+import { useFilteredContents } from "../hooks/useFilteredContents";
 import Filters from "./Filters";
 import GridLayout from "./GridLayout";
 import HomeCategory from "./HomeCategory";
@@ -13,6 +12,7 @@ const ContentGrid = () => {
     country: null,
     genre: null,
     dj: null,
+    year: null,
   });
 
   const {
@@ -29,7 +29,8 @@ const ContentGrid = () => {
   if (isCategoriesError || isFilteredContentsError)
     return <div>Error fetching data</div>;
 
-  const hasFilters = filters.country || filters.genre || filters.dj;
+  const hasFilters =
+    filters.country || filters.genre || filters.dj || filters.year;
 
   return (
     <div className="min-h-screen bg-gray-900">

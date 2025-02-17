@@ -1,7 +1,7 @@
 // app/search/[query]/page.js
 "use client";
 import { useParams } from "next/navigation";
-import { useSearchQuery } from "../useSearchQuery";
+import { useSearchQuery } from "../hooks/useSearchQuery";
 import GridLayout from "./GridLayout";
 import { Loader2 } from "lucide-react";
 

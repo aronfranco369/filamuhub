@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useFilters } from "../useFilters";
+import { useFilters } from "../hooks/useFilters";
 import {
   Select,
   SelectContent,
@@ -16,14 +16,22 @@ const Filters = ({ onFilterChange }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [selectedDj, setSelectedDj] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(null);
 
   useEffect(() => {
     onFilterChange({
       country: selectedCountry,
       genre: selectedGenre,
       dj: selectedDj,
+      year: selectedYear,
     });
-  }, [selectedCountry, selectedGenre, selectedDj, onFilterChange]);
+  }, [
+    selectedCountry,
+    selectedGenre,
+    selectedDj,
+    selectedYear,
+    onFilterChange,
+  ]);
 
   const handleFilterChange = (type, value) => {
     switch (type) {
@@ -36,6 +44,9 @@ const Filters = ({ onFilterChange }) => {
       case "dj":
         setSelectedDj(value);
         break;
+      case "year":
+        setSelectedYear(value);
+        break;
     }
   };
 
@@ -43,12 +54,14 @@ const Filters = ({ onFilterChange }) => {
     setSelectedCountry(null);
     setSelectedGenre(null);
     setSelectedDj(null);
+    setSelectedYear(null);
   };
 
   if (isLoading) return <FiltersSkeleton />;
   if (isError) return <div>Error loading filters</div>;
 
-  const hasActiveFilters = selectedCountry || selectedGenre || selectedDj;
+  const hasActiveFilters =
+    selectedCountry || selectedGenre || selectedDj || selectedYear;
 
   return (
     <div className="space-y-2 p-2">
@@ -108,6 +121,26 @@ const Filters = ({ onFilterChange }) => {
                 className="hover:bg-gray-700 focus:bg-gray-700 text-white hover:text-white focus:text-white"
               >
                 {dj}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          onValueChange={(value) => handleFilterChange("year", value)}
+          value={selectedYear || ""}
+        >
+          <SelectTrigger className="w-[180px] bg-gray-800 text-white border-gray-700 focus:ring-gray-700 focus:ring-offset-gray-900">
+            <SelectValue placeholder="Year" />
+          </SelectTrigger>
+          <SelectContent className="bg-gray-800 text-white border-gray-700">
+            {filterOptions?.years.map((year) => (
+              <SelectItem
+                key={year}
+                value={year}
+                className="hover:bg-gray-700 focus:bg-gray-700 text-white hover:text-white focus:text-white"
+              >
+                {year}
               </SelectItem>
             ))}
           </SelectContent>

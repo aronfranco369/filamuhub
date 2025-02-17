@@ -28,7 +28,7 @@ const MovieCard = ({
 
   return (
     <Link href={`/details/${id}`}>
-      <Card className="h-full w-300px transition-all hover:shadow-lg relative overflow-hidden group">
+      <Card className="h-full w-full transition-all hover:shadow-lg relative overflow-hidden group">
         {/* Glow Effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
 

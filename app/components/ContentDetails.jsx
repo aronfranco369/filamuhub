@@ -1,90 +1,37 @@
 "use client";
+
 import React, { useState } from "react";
-import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "../supabaseClient";
+import { useParams, useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
+import { useFetchContentDetails } from "../hooks/useFetchContentDetails";
 import ContentDetailsSkeleton from "./skeltons/ContentDetailsSketon";
-
-const fetchContentDetails = async (id) => {
-  const { data, error } = await supabase
-    .from("contents")
-    .select(
-      `
-      id,
-      external_id,
-      type,
-      title,
-      country,
-      year,
-      genres,
-      poster_url,
-      plot_summary,
-      dj,
-      season,
-      download_url,
-      file_size,
-      created_at,
-      updated_at,
-      episodes:episodes(
-        id,
-        title,
-        download_url,
-        file_size,
-        created_at
-      )
-    `
-    )
-    .eq("id", id)
-    .single();
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  return {
-    ...data,
-    episodes: data.episodes || [],
-    latestEpisode:
-      data.episodes?.length > 0
-        ? data.episodes.reduce((latest, episode) => {
-            return new Date(episode.created_at) > new Date(latest.created_at)
-              ? episode
-              : latest;
-          }, data.episodes[0])
-        : null,
-  };
-};
+import DownloadButton from "./DownloadButton";
 
 const ContentDetails = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const router = useRouter();
   const { id } = useParams();
-  const {
-    data: content,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["content-details", id],
-    queryFn: () => fetchContentDetails(id),
-  });
+  const { data: content, isLoading, isError } = useFetchContentDetails(id);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (isLoading) return <ContentDetailsSkeleton />;
   if (isError) return <div>Error fetching content details</div>;
   if (!content) return <div>Content not found</div>;
 
+  const handleDownload = () => {
+    router.push("/download"); // Navigate to the download page
+  };
+
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-900 min-h-screen text-white">
-      {/* Top section with image and basic info in row layout */}
+      {/* Top section with image and basic info */}
       <div className="flex flex-col md:flex-row gap-8 mb-8 w-full">
-        {/* Image container taking 1/3 width on larger screens */}
         <div className="w-full md:w-1/3 h-64 sm:h-72 md:h-80 lg:h-96 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           {content.poster_url ? (
             <img
@@ -99,7 +46,6 @@ const ContentDetails = () => {
           )}
         </div>
 
-        {/* Metadata section taking 2/3 width on larger screens */}
         <div className="w-full md:w-2/3 flex flex-col justify-center">
           <h1 className="text-4xl font-bold mb-2">{content.title}</h1>
           <div className="mb-4">
@@ -166,14 +112,11 @@ const ContentDetails = () => {
                     {new Date(episode.created_at).toLocaleDateString()}
                   </span>
                 </div>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="bg-gray-900 hover:bg-gray-700 text-white flex items-center gap-1 px-2 py-1 text-xs"
-                >
-                  <Download className="w-3 h-3" />
-                  <span>{episode.file_size} MB</span>
-                </Button>
+                <DownloadButton
+                  onClick={handleDownload}
+                  fileSize={episode.file_size}
+                  className="px-2 py-1 text-xs"
+                />
               </div>
             </Card>
           ))
@@ -181,14 +124,11 @@ const ContentDetails = () => {
           <Card className="bg-gray-800 border-gray-700">
             <div className="flex justify-between items-start p-4">
               <span className="font-semibold text-white">{content.title}</span>
-              <Button
-                variant="default"
-                size="sm"
-                className="bg-gray-900 hover:bg-gray-700 text-white flex items-center gap-1 px-2 py-1 text-xs"
-              >
-                <Download className="w-3 h-3" />
-                <span>{content.file_size} MB</span>
-              </Button>
+              <DownloadButton
+                onClick={handleDownload}
+                fileSize={content.file_size}
+                className="px-2 py-1 text-xs"
+              />
             </div>
           </Card>
         )}

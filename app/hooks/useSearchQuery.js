@@ -1,13 +1,14 @@
-// Fetch filtered contents based on selected filters
-"use client";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../supabaseClient";
 
-export const useFilteredContents = (filters) => {
+export const useSearchQuery = (searchTerm) => {
   return useQuery({
-    queryKey: ["filtered-contents", filters],
+    queryKey: ["search", searchTerm],
     queryFn: async () => {
-      let query = supabase
+      // Remove minimum length check
+      if (!searchTerm) return [];
+
+      const { data, error } = await supabase
         .from("contents")
         .select(
           `
@@ -35,20 +36,14 @@ export const useFilteredContents = (filters) => {
           )
         `
         )
+        .or(`title.ilike.%${searchTerm}%,dj.ilike.%${searchTerm}%`)
         .order("created_at", { ascending: false });
-
-      if (filters.country) query = query.eq("country", filters.country);
-      if (filters.genre) query = query.contains("genres", [filters.genre]);
-      if (filters.dj) query = query.eq("dj", filters.dj);
-
-      const { data: items, error } = await query;
 
       if (error) {
         throw new Error(error.message);
       }
 
-      // Process items based on type
-      const processedItems = items.map((item) => {
+      return data.map((item) => {
         if (item.type === "movie") {
           return {
             ...item,
@@ -75,8 +70,8 @@ export const useFilteredContents = (filters) => {
         }
         return item;
       });
-
-      return processedItems;
     },
+    enabled: true, // Always enable the query
+    staleTime: 1000 * 60 * 5, // Cache results for 5 minutes
   });
 };
