@@ -1,19 +1,35 @@
+// components/SearchInput.js
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { Search, X, Loader2 } from "lucide-react";
-import { useDebounce } from "use-debounce";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const SearchInput = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchInput = ({ defaultValue = "" }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(defaultValue);
   const [isTyping, setIsTyping] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [debouncedValue] = useDebounce(searchTerm, 300);
+  const [isSearchOpen, setIsSearchOpen] = useState(!!defaultValue);
   const inputRef = useRef(null);
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
     setIsTyping(true);
-    onSearch(e.target.value);
+
+    // Debounce the search
+    const timeoutId = setTimeout(() => {
+      setIsTyping(false);
+      const params = new URLSearchParams(searchParams);
+      if (value) {
+        params.set("q", value);
+      } else {
+        params.delete("q");
+      }
+      router.push(`?${params.toString()}`);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
   };
 
   const toggleSearch = () => {
@@ -25,15 +41,15 @@ const SearchInput = ({ onSearch }) => {
     } else {
       setSearchTerm("");
       setIsTyping(false);
-      onSearch("");
+      router.push("/");
     }
   };
 
   const handleClearSearch = () => {
     setSearchTerm("");
     setIsTyping(false);
-    onSearch("");
     setIsSearchOpen(false);
+    router.push("/");
   };
 
   useEffect(() => {

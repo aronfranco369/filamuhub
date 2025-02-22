@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useFilters } from "../hooks/useFilters";
+"use client";
+import React, { useEffect, useState } from "react";
+import { getFilterOptions } from "../actions/filters";
 import {
   Select,
   SelectContent,
@@ -9,59 +10,81 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import FiltersSkeleton from "./skeltons/FiltersSkelton";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const Filters = ({ onFilterChange }) => {
-  const { data: filterOptions, isLoading, isError } = useFilters();
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedGenre, setSelectedGenre] = useState(null);
-  const [selectedDj, setSelectedDj] = useState(null);
-  const [selectedYear, setSelectedYear] = useState(null);
+function Filters() {
+  const [filterOptions, setFilterOptions] = useState({
+    countries: [],
+    genres: [],
+    djs: [],
+    years: [],
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    onFilterChange({
-      country: selectedCountry,
-      genre: selectedGenre,
-      dj: selectedDj,
-      year: selectedYear,
-    });
-  }, [
-    selectedCountry,
-    selectedGenre,
-    selectedDj,
-    selectedYear,
-    onFilterChange,
-  ]);
+    const loadFilterOptions = async () => {
+      try {
+        setIsLoading(true);
+        const options = await getFilterOptions();
+        setFilterOptions(options);
+        setError(null);
+      } catch (error) {
+        console.error("Error loading filter options:", error);
+        setError("Failed to load filter options");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadFilterOptions();
+  }, []);
+
+  const selectedCountry = searchParams.get("country");
+  const selectedGenre = searchParams.get("genre");
+  const selectedDj = searchParams.get("dj");
+  const selectedYear = searchParams.get("year");
+
+  const createQueryString = (name, value) => {
+    const params = new URLSearchParams(searchParams);
+    if (value === null) {
+      params.delete(name);
+    } else {
+      params.set(name, value);
+    }
+    return params.toString();
+  };
 
   const handleFilterChange = (type, value) => {
-    switch (type) {
-      case "country":
-        setSelectedCountry(value);
-        break;
-      case "genre":
-        setSelectedGenre(value);
-        break;
-      case "dj":
-        setSelectedDj(value);
-        break;
-      case "year":
-        setSelectedYear(value);
-        break;
-    }
+    router.push(`?${createQueryString(type, value)}`);
   };
 
   const clearFilters = () => {
-    setSelectedCountry(null);
-    setSelectedGenre(null);
-    setSelectedDj(null);
-    setSelectedYear(null);
+    router.push("/");
   };
-
-  if (isLoading) return <FiltersSkeleton />;
-  if (isError) return <div>Error loading filters</div>;
 
   const hasActiveFilters =
     selectedCountry || selectedGenre || selectedDj || selectedYear;
+
+  if (error) {
+    return <div className="p-4 text-red-500 bg-red-100 rounded">{error}</div>;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="space-y-2 p-2 animate-pulse">
+        <div className="flex items-center space-x-2">
+          {[1, 2, 3, 4].map((index) => (
+            <div key={index} className="w-[180px] h-10 bg-gray-800 rounded" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-2 p-2">
@@ -160,6 +183,6 @@ const Filters = ({ onFilterChange }) => {
       )}
     </div>
   );
-};
+}
 
 export default Filters;

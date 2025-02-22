@@ -9,6 +9,9 @@ import GridLayoutSkeleton from "./skeltons/GridLayoutSkelton";
 const fetchCategoryContents = async (category) => {
   const [country, type] = category.split(" ").map((str) => str.toLowerCase());
 
+  console.log("Country:", country);
+  console.log("Type", type);
+
   const { data, error } = await supabase
     .from("contents")
     .select(

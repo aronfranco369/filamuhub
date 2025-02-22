@@ -13,12 +13,15 @@ import { Button } from "@/components/ui/button";
 import { useFetchContentDetails } from "../hooks/useFetchContentDetails";
 import ContentDetailsSkeleton from "./skeltons/ContentDetailsSketon";
 import DownloadButton from "./DownloadButton";
+import Image from "next/image";
 
 const ContentDetails = () => {
   const router = useRouter();
   const { id } = useParams();
   const { data: content, isLoading, isError } = useFetchContentDetails(id);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   if (isLoading) return <ContentDetailsSkeleton />;
   if (isError) return <div>Error fetching content details</div>;
@@ -28,16 +31,32 @@ const ContentDetails = () => {
     router.push("/download"); // Navigate to the download page
   };
 
+  // Fallback image URL if the main image fails to load
+  const fallbackImageUrl = "/api/placeholder/400/320";
+
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-900 min-h-screen text-white">
       {/* Top section with image and basic info */}
       <div className="flex flex-col md:flex-row gap-8 mb-8 w-full">
-        <div className="w-full md:w-1/3 h-64 sm:h-72 md:h-80 lg:h-96 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div className="w-full md:w-1/3 h-64 sm:h-72 md:h-80 lg:h-96 bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
+          {!imageLoaded && (
+            <div className="absolute inset-0 animate-pulse bg-gray-700"></div>
+          )}
           {content.poster_url ? (
-            <img
-              src={content.poster_url}
+            <Image
+              src={imageError ? fallbackImageUrl : content.poster_url}
               alt={content.title}
-              className="w-full h-full object-cover rounded-lg"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className={`object-cover rounded-lg transition-transform duration-200 ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => {
+                setImageError(true);
+                setImageLoaded(true);
+              }}
+              priority={false}
             />
           ) : (
             <div className="text-gray-400 h-full flex items-center justify-center">
