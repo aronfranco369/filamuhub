@@ -16,7 +16,7 @@ export default function Page() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">
-          Loading...
+          Loading....
         </div>
       }
     >
