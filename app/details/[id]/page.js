@@ -1,5 +1,6 @@
-import ContentDetails from "@/app/components/ContentDetails";
+import ContentDetails from "@/app/components/ContentDetails/ContentDetails";
 
-export default function Page() {
-  return <ContentDetails />;
+export default async function Page({ params }) {
+  const awaitedParams = await params;
+  return <ContentDetails id={awaitedParams.id} />;
 }

@@ -4,6 +4,7 @@ import MovieCard from "./MovieCard";
 import { Button } from "@/components/ui/button";
 import { fetchContentByCountry } from "../actions/countryCategories";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import CountrySectionSkeleton from "./skeltons/CountrySectionSkelton";
 
 const CountrySection = ({ country, items, type, onLoadMore, hasMore }) => (
   <section className="space-y-2 bg-gray-800 rounded-lg p-4">
@@ -129,13 +130,13 @@ const CountryContentSection = ({ type }) => {
 
   if (isLoading) {
     return (
-      <div className="text-center p-8">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
-        <p className="mt-4 text-gray-300">Loading content...</p>
+      <div className="bg-gray-900 min-h-screen">
+        <div className="container mx-auto px-4 py-8">
+          <CountrySectionSkeleton />
+        </div>
       </div>
     );
   }
-
   if (!countryContentData?.results || countryContentData.results.length === 0) {
     return (
       <div className="text-center p-8 text-gray-300">
@@ -146,18 +147,6 @@ const CountryContentSection = ({ type }) => {
 
   return (
     <div className="bg-gray-900 min-h-screen">
-      <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-800">
-        <div className="container mx-auto px-4 py-2">
-          <div className="flex items-center justify-between">
-            <div className="w-auto">
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-100 to-gray-400 bg-clip-text text-transparent">
-                Filamu Hub
-              </h1>
-            </div>
-            <div className="flex items-center flex-1 justify-end"></div>
-          </div>
-        </div>
-      </header>
       <div className="container mx-auto px-4 py-8 space-y-8">
         {countryContentData.results.map((categoryContent) => (
           <CountrySection

@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+// contentService.js
 import { supabase } from "../supabaseClient";
 
-const fetchContentDetails = async (id) => {
+export async function fetchContentDetails(id) {
   const { data, error } = await supabase
     .from("contents")
     .select(
@@ -49,11 +49,4 @@ const fetchContentDetails = async (id) => {
           }, data.episodes[0])
         : null,
   };
-};
-
-export const useFetchContentDetails = (id) => {
-  return useQuery({
-    queryKey: ["content-details", id],
-    queryFn: () => fetchContentDetails(id),
-  });
-};
+}

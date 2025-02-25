@@ -1,6 +1,8 @@
+// app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import SearchInput from "./components/SearchInput";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,8 +22,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>
-        <Providers>{children}</Providers>
+      <body className="min-h-screen bg-gray-900 text-white">
+        <Providers>
+          {/* Fixed header section */}
+          <div className="fixed top-0 left-0 w-full bg-gray-900 z-50">
+            <SearchInput />
+          </div>
+
+          {/* Main content with padding to account for fixed header */}
+          <main className="pt-16">{children}</main>
+        </Providers>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import CountryContentSection from "@/app/components/CountrySection";
 
-export default function Page({ params }) {
-  console.log("Category param:", params.category); // Add this for debugging
-  return <CountryContentSection type={params.category} />;
+export default async function Page({ params }) {
+  const awaitedParams = await params;
+  return <CountryContentSection type={awaitedParams.category} />;
 }

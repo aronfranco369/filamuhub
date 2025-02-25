@@ -104,7 +104,7 @@ const AppDownloadBanner = () => {
         </CardContent>
       </Card>
 
-      {/* Screenshots Carousel */}
+      {/* Screenshotsss Carousel */}
       <Card className="bg-gray-800 border-gray-700">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg text-gray-100">
