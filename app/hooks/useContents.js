@@ -6,7 +6,7 @@ export const useContents = () => {
   return useQuery({
     queryKey: ["categorized-contents"],
     queryFn: async () => {
-      // Get all distinct combinations of country and type
+      // Get all distincttt combinations of country and type
       const { data: categories, error: categoriesError } = await supabase
         .from("contents")
         .select("country, type")
