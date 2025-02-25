@@ -1,11 +1,42 @@
 // SearchInput.js
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { Search, X, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useDebounce } from "use-debounce";
 
-const SearchInput = ({ defaultValue = "" }) => {
+// Loading component for Suspense fallback
+function SearchInputLoading() {
+  return (
+    <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-800">
+      <div className="container mx-auto px-4 py-2">
+        <div className="flex items-center justify-between">
+          <div className="w-auto">
+            <a
+              href="/"
+              className="text-2xl font-bold bg-gradient-to-r from-gray-100 to-gray-400 bg-clip-text text-transparent"
+            >
+              Filamu Hub
+            </a>
+          </div>
+          <div className="flex items-center flex-1 justify-end">
+            <div className="w-8 flex items-center relative">
+              <button
+                className="p-1.5 rounded-full hover:bg-gray-800/70"
+                aria-label="Open search"
+              >
+                <Search className="w-4 h-4 text-gray-400" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+// Component that uses searchParams
+function SearchInputContent({ defaultValue = "" }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -146,6 +177,15 @@ const SearchInput = ({ defaultValue = "" }) => {
         </div>
       </div>
     </header>
+  );
+}
+
+// Main component with Suspense boundary
+const SearchInput = ({ defaultValue = "" }) => {
+  return (
+    <Suspense fallback={<SearchInputLoading />}>
+      <SearchInputContent defaultValue={defaultValue} />
+    </Suspense>
   );
 };
 

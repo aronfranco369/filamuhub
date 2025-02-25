@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { getFilterOptions } from "../actions/filters";
 import {
   Select,
@@ -12,7 +12,21 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function Filters() {
+// Loading component for Suspense fallback
+function FiltersLoading() {
+  return (
+    <div className="space-y-2 p-2 animate-pulse">
+      <div className="flex items-center space-x-2">
+        {[1, 2, 3, 4].map((index) => (
+          <div key={index} className="w-[180px] h-10 bg-gray-800 rounded" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Client Component that uses searchParams
+function FiltersContent() {
   const [filterOptions, setFilterOptions] = useState({
     countries: [],
     genres: [],
@@ -182,6 +196,15 @@ function Filters() {
         </Button>
       )}
     </div>
+  );
+}
+
+// Main component that wraps with Suspense
+function Filters() {
+  return (
+    <Suspense fallback={<FiltersLoading />}>
+      <FiltersContent />
+    </Suspense>
   );
 }
 
