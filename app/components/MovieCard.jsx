@@ -22,7 +22,6 @@ const MovieCard = ({
   });
   const [imageError, setImageError] = React.useState(false);
   const [imageLoaded, setImageLoaded] = React.useState(false);
-
   // Fallback image URL if the main image fails to load
   const fallbackImageUrl = "/api/placeholder/400/320";
 
@@ -44,7 +43,7 @@ const MovieCard = ({
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className={`object-cover transition-transform duration-200 group-hover:scale-110 ${
+            className={`object-cover object-center transition-transform duration-200 group-hover:scale-105 ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setImageLoaded(true)}

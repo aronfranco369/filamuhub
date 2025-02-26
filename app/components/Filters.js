@@ -90,7 +90,7 @@ function FiltersContent() {
 
   if (isLoading) {
     return (
-      <div className="space-y-2 p-2 animate-pulse">
+      <div className="space-y-2 p-1 animate-pulse">
         <div className="flex items-center space-x-2">
           {[1, 2, 3, 4].map((index) => (
             <div key={index} className="w-[180px] h-10 bg-gray-800 rounded" />
@@ -101,7 +101,7 @@ function FiltersContent() {
   }
 
   return (
-    <div className="space-y-2 p-2">
+    <div className="space-y-1 p-0.5">
       <div className="flex items-center space-x-2">
         <Select
           onValueChange={(value) => handleFilterChange("country", value)}
