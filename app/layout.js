@@ -1,9 +1,10 @@
+// app/layout.js
 import Script from "next/script";
-
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import SearchInput from "./components/SearchInput";
+import Footer from "./components/Footer"; // Import the Footer component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,7 +64,6 @@ export const metadata = {
   },
 };
 
-// app/layout.js (modified)
 export default function RootLayout({ children }) {
   return (
     <html lang="sw" className={`${geistSans.variable} ${geistMono.variable}`}>
@@ -76,6 +76,10 @@ export default function RootLayout({ children }) {
 
           {/* Main content with padding matching header height */}
           <main className="pt-14">{children}</main>
+
+          {/* Footer */}
+          <Footer />
+
           <Script
             id="movie-structured-data"
             type="application/ld+json"
