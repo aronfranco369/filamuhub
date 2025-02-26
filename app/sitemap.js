@@ -1,5 +1,5 @@
 // app/sitemap.js (Next.js 13+ route handler for sitemap)
-import { supabase } from "../supabaseClient";
+import { supabase } from "./supabaseClient";
 
 export default async function sitemap() {
   const { data: movies } = await supabase
