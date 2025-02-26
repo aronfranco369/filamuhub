@@ -13,10 +13,17 @@ async function RelatedContent({ content }) {
 
   return (
     <Card className="mb-6 bg-gray-800 border-gray-700">
-      <CardHeader>
-        <CardTitle className="text-white">Related Content</CardTitle>
+      <CardHeader className="pb-2 pt-2">
+        {" "}
+        {/* Reduce bottom padding */}
+        <CardTitle className="text-white text-lg">
+          Zinazofanana na{" "}
+          <span className="italic font-normal">"{content.title}"</span>
+        </CardTitle>
       </CardHeader>
-      <div className="p-4">
+      <div className="px-1">
+        {" "}
+        {/* Remove vertical padding */}
         <GridLayout data={relatedContent} message="No related content found" />
       </div>
     </Card>

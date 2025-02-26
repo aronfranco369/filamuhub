@@ -56,7 +56,7 @@ export default function EpisodesSection({ content }) {
                 variant="link"
                 className="p-0 h-auto mt-4 text-blue-400 hover:text-blue-300"
               >
-                {isEpisodesExpanded ? "See less" : "See more"}
+                {isEpisodesExpanded ? "Onyesha chache" : "Onyesha zaidi"}
               </Button>
             </CollapsibleTrigger>
           )}

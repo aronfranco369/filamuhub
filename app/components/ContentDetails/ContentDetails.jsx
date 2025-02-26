@@ -17,7 +17,7 @@ async function ContentDetailsData({ name }) {
   const fallbackImageUrl = "/api/placeholder/400/320";
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-gray-900 min-h-screen text-white">
+    <div className="max-w-7xl mx-auto p-3 bg-gray-900 min-h-screen text-white">
       <div className="flex flex-col md:flex-row gap-8 mb-8 w-full">
         <div className="w-full md:w-1/3 h-64 sm:h-72 md:h-80 lg:h-96 bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
           {content.poster_url ? (
@@ -64,7 +64,7 @@ async function ContentDetailsData({ name }) {
           <SummarySection content={content.plot_summary} />
         </CardContent>
       </Card>
-      <div className="space-y-8">
+      <div className="space-y-5">
         {" "}
         {/* Added wrapper with vertical spacing */}
         <EpisodesSection content={content} />

@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const ContentDetailsSkeleton = () => {
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-gray-900 min-h-screen text-white">
+    <div className="max-w-7xl mx-auto p-3 bg-gray-900 min-h-screen text-white">
       {/* Top section skeleton */}
       <div className="flex flex-col md:flex-row gap-8 mb-8 w-full">
         {/* Image skeleton */}

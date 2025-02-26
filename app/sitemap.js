@@ -9,7 +9,7 @@ export default async function sitemap() {
 
   const { data: series = [] } = await supabase
     .from("contents")
-    .select("id, title, created_at, updated_at")
+    .select("id, title, created_at, external_id , updated_at")
     .eq("type", "series");
 
   // Ensure we handle null values and properly format dates

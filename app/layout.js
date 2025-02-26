@@ -22,6 +22,7 @@ export const metadata = {
     "Pakua muvi/sizoni zilizotafsiriwa kwa lugha ya kiswahili. Filamu bora zaidi zinazotafsiriwa Kiswahili.",
   keywords: [
     "filamu",
+    "filamu hub",
     "muvi",
     "sizoni",
     "movie",
