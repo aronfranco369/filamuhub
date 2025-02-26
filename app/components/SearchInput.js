@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, Suspense } from "react";
 import { Search, X, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useDebounce } from "use-debounce";
+import Image from "next/image";
 
 // Loading component for Suspense fallback
 function SearchInputLoading() {
@@ -12,11 +13,14 @@ function SearchInputLoading() {
       <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between">
           <div className="w-auto">
-            <a
-              href="/"
-              className="text-2xl font-bold bg-gradient-to-r from-gray-100 to-gray-400 bg-clip-text text-transparent"
-            >
-              Filamu Hub
+            <a href="/" className="block">
+              <Image
+                src="/filamuhub.svg"
+                alt="Filamu Hub Logo"
+                width={180}
+                height={50}
+                className="h-10 w-auto"
+              />
             </a>
           </div>
           <div className="flex items-center flex-1 justify-end">
@@ -102,11 +106,15 @@ function SearchInputContent({ defaultValue = "" }) {
       <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between">
           <div className="w-auto">
-            <a
-              href="/"
-              className="text-2xl font-bold bg-gradient-to-r from-gray-100 to-gray-400 bg-clip-text text-transparent hover:from-gray-50 hover:to-gray-300 transition-all"
-            >
-              Filamu Hub
+            <a href="/" className="block hover:opacity-90 transition-opacity">
+              <Image
+                src="/filamuhub.svg"
+                alt="Filamu Hub Logo"
+                width={180}
+                height={50}
+                className="h-10 w-auto"
+                priority
+              />
             </a>
           </div>
 
