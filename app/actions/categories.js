@@ -29,7 +29,7 @@ const transformContent = (item) => {
 };
 
 export async function fetchCategorizedContent() {
-  const ITEMS_PER_SECTION = 9;
+  const ITEMS_PER_SECTION = 6;
 
   // Common select query with episodes
   const baseQuery = (type, isTrending = false) => {

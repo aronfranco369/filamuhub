@@ -4,12 +4,12 @@ import MovieCard from "./MovieCard";
 import { fetchCategorizedContent } from "../actions/categories";
 
 const ContentSection = ({ title, items, showViewMore = false, type }) => (
-  <section className="space-y-2 bg-gray-800 rounded-lg p-4">
-    <h2 className="text-xl font-semibold tracking-wide text-gray-100 font-sans uppercase pt-1">
+  <section className="space-y-2 bg-gray-800 rounded-lg p-1">
+    <h2 className="text-xl font-semibold tracking-wide text-gray-100 font-sans uppercase">
       {title}
     </h2>
     <div className="relative">
-      <div className="grid grid-cols-3 gap-2 sm:gap-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4">
         {items.map((item) => (
           <MovieCard
             key={item.id}

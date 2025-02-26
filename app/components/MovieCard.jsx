@@ -30,7 +30,7 @@ const MovieCard = ({
     <Link href={`/details/${id}`}>
       <Card className="h-full w-full transition-all hover:shadow-lg relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
-        <div className="relative aspect-[2/3] w-full overflow-hidden">
+        <div className="relative aspect-[3/3] w-full overflow-hidden">
           {director && (
             <Badge className="absolute top-0 left-0 z-10 bg-black/75 text-white text-xs rounded-r-md rounded-l-none px-2 py-0.5 leading-none">
               {director}

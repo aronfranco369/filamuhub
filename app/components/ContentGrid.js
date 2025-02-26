@@ -36,7 +36,7 @@ async function ContentGrid({ searchParams }) {
 
     return (
       <div className="min-h-screen bg-gray-900">
-        <div className="container mx-auto p-2 space-y-4">
+        <div className="container mx-auto p-1 space-y-1">
           <Filters />
           <ContentCategories />
         </div>

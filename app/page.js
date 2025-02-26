@@ -15,7 +15,7 @@ export default async function Home({ searchParams }) {
   const searchResults = searchTerm ? await searchContents(searchTerm) : [];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-0">
       {searchTerm ? (
         <>
           <h1 className="text-2xl mb-4">Search Results for "{searchTerm}"</h1>
