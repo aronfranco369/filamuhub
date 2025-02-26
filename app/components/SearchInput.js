@@ -8,10 +8,17 @@ import Image from "next/image";
 
 // Loading component for Suspense fallback
 function SearchInputLoading() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   return (
     <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-800">
       <div className="container mx-auto px-4 py-2">
-        <div className="flex items-center justify-between">
+        <div
+          className={`flex items-center ${
+            isHomePage ? "justify-between" : "justify-center"
+          }`}
+        >
           <div className="w-auto">
             <a href="/" className="block">
               <Image
@@ -23,16 +30,21 @@ function SearchInputLoading() {
               />
             </a>
           </div>
-          <div className="flex items-center flex-1 justify-end">
-            <div className="w-8 flex items-center relative">
-              <button
-                className="p-1.5 rounded-full hover:bg-gray-800/70"
-                aria-label="Open search"
-              >
-                <Search className="w-4 h-4 text-gray-400" aria-hidden="true" />
-              </button>
+          {isHomePage && (
+            <div className="flex items-center flex-1 justify-end">
+              <div className="w-8 flex items-center relative">
+                <button
+                  className="p-1.5 rounded-full hover:bg-gray-800/70"
+                  aria-label="Open search"
+                >
+                  <Search
+                    className="w-4 h-4 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </header>
@@ -104,7 +116,11 @@ function SearchInputContent({ defaultValue = "" }) {
   return (
     <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-800">
       <div className="container mx-auto px-4 py-2">
-        <div className="flex items-center justify-between">
+        <div
+          className={`flex items-center ${
+            isHomePage ? "justify-between" : "justify-center"
+          }`}
+        >
           <div className="w-auto">
             <a href="/" className="block hover:opacity-90 transition-opacity">
               <Image
