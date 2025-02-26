@@ -4,7 +4,7 @@ export default async function sitemap() {
   // Fetch data from Supabase
   const { data: movies = [] } = await supabase
     .from("contents")
-    .select("id, title, created_at, updated_at")
+    .select("id, title, created_at, external_id, updated_at")
     .eq("type", "movie");
 
   const { data: series = [] } = await supabase
