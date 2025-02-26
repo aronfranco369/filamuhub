@@ -165,7 +165,7 @@ function FiltersContent() {
 
         <Select
           onValueChange={(value) => handleFilterChange("year", value)}
-          value={selectedYear || ""}
+          value={selectedYear ? String(selectedYear) : ""}
         >
           <SelectTrigger className="w-[180px] bg-gray-800 text-white border-gray-700 focus:ring-gray-700 focus:ring-offset-gray-900">
             <SelectValue placeholder="Year" />
@@ -174,7 +174,7 @@ function FiltersContent() {
             {filterOptions?.years.map((year) => (
               <SelectItem
                 key={year}
-                value={year}
+                value={String(year)}
                 className="hover:bg-gray-700 focus:bg-gray-700 text-white hover:text-white focus:text-white"
               >
                 {year}

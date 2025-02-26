@@ -11,6 +11,7 @@ const MovieCard = ({
   imageUrl,
   title,
   type,
+  name,
   created_at,
   latestEpisode,
   genre,
@@ -22,11 +23,13 @@ const MovieCard = ({
   });
   const [imageError, setImageError] = React.useState(false);
   const [imageLoaded, setImageLoaded] = React.useState(false);
+
   // Fallback image URL if the main image fails to load
   const fallbackImageUrl = "/api/placeholder/400/320";
+  const linkHref = type === "series" ? `/series/${name}` : `/movie/${name}`;
 
   return (
-    <Link href={`/details/${id}`}>
+    <Link href={linkHref}>
       <Card className="h-full w-full transition-all hover:shadow-lg relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300"></div>
         <div className="relative aspect-[3/3] w-full overflow-hidden">
@@ -43,7 +46,7 @@ const MovieCard = ({
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className={`object-cover object-center transition-transform duration-200 group-hover:scale-105 ${
+            className={`object-cover object-center transition-transform duration-200 group-hover:scale-110 ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setImageLoaded(true)}

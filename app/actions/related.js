@@ -9,6 +9,7 @@ export async function fetchRelatedContent(content) {
       type,
       title,
       poster_url,
+      external_id,
       genres,
       dj,
       country,

@@ -14,6 +14,7 @@ const ContentSection = ({ title, items, showViewMore = false, type }) => (
           <MovieCard
             key={item.id}
             id={item.id}
+            name={item.external_id}
             imageUrl={item.poster_url}
             title={item.title}
             type={item.type}

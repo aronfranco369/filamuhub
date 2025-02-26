@@ -25,6 +25,7 @@ const GridLayout = ({ data, message, isLoading }) => {
           key={content.id}
           id={content.id}
           imageUrl={content.poster_url}
+          name={content.external_id}
           title={content.title}
           type={content.type}
           created_at={content.created_at}

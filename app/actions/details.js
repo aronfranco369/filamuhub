@@ -1,7 +1,7 @@
 // contentService.js
 import { supabase } from "../supabaseClient";
 
-export async function fetchContentDetails(id) {
+export async function fetchContentDetails(name) {
   const { data, error } = await supabase
     .from("contents")
     .select(
@@ -30,7 +30,7 @@ export async function fetchContentDetails(id) {
       )
     `
     )
-    .eq("id", id)
+    .eq("external_id", name)
     .single();
 
   if (error) {

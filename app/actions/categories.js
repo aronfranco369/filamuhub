@@ -13,6 +13,7 @@ const transformContent = (item) => {
 
   return {
     id: item.id,
+    external_id: item.external_id,
     title: item.title,
     poster_url: item.poster_url,
     type: item.type,

@@ -9,8 +9,8 @@ import EpisodesSection from "./EpisodesSection";
 import RelatedContent from "./RelatedContent";
 
 // Component that fetches and displays the content
-async function ContentDetailsData({ id }) {
-  const content = await fetchContentDetails(id);
+async function ContentDetailsData({ name }) {
+  const content = await fetchContentDetails(name);
   if (!content) {
     return <div>Content not found</div>;
   }
@@ -75,10 +75,10 @@ async function ContentDetailsData({ id }) {
 }
 
 // Wrapper component that handles the loading state
-function ContentDetails({ id }) {
+function ContentDetails({ name }) {
   return (
     <Suspense fallback={<ContentDetailsSkeleton />}>
-      <ContentDetailsData id={id} />
+      <ContentDetailsData name={name} />
     </Suspense>
   );
 }

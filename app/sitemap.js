@@ -1,25 +1,28 @@
-// app/sitemap.js (Next.js 13+ route handler for sitemap)
 import { supabase } from "./supabaseClient";
 
 export default async function sitemap() {
-  const { data: movies } = await supabase
+  // Fetch data from Supabase
+  const { data: movies = [] } = await supabase
     .from("contents")
     .select("id, title, created_at, updated_at")
     .eq("type", "movie");
 
-  const { data: series } = await supabase
+  const { data: series = [] } = await supabase
     .from("contents")
     .select("id, title, created_at, updated_at")
     .eq("type", "series");
 
+  // Ensure we handle null values and properly format dates
   const movieUrls = movies.map((movie) => ({
-    url: `https://filamuhub24.vercel.app/details/${movie.id}`,
-    lastModified: movie.updated_at || movie.created_at,
+    url: `https://filamuhub24.vercel.app/movie/${movie.external_id}`,
+    lastModified: new Date(movie.updated_at || movie.created_at).toISOString(),
   }));
 
   const seriesUrls = series.map((series) => ({
-    url: `https://filamuhub24.vercel.app/details/${series.id}`,
-    lastModified: series.updated_at || series.created_at,
+    url: `https://filamuhub24.vercel.app/series/${series.external_id}`,
+    lastModified: new Date(
+      series.updated_at || series.created_at
+    ).toISOString(),
   }));
 
   // Add static pages
