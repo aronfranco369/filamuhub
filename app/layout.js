@@ -5,6 +5,7 @@ import "./globals.css";
 import Providers from "./providers";
 import SearchInput from "./components/SearchInput";
 import Footer from "./components/Footer"; // Import the Footer component
+import { getDrawer } from "./actions/drawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,14 +66,31 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const customNames = {
+    "usa-series": "Sizoni za wamarekani",
+    "usa-movie": "Muvi za wamarekani",
+    "india-series": "Sizoni za kihindi",
+    "india-movie": "Muvi za kihindi",
+    "turkey-series": "Sizoni za waturuki",
+    "turkey-movie": "Muvi za waturuki",
+    "tanzania-series": "Tamthilia za kitanzania",
+    "tanzania-movie": "Filamu za kitanzania",
+    "south korea-series": "Sizoni za kikorea",
+    "south korea-movie": "Muvi za kikorea",
+
+    // Add more custom names as needed
+  };
+
+  const categories = await getDrawer(customNames);
+
   return (
     <html lang="sw" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-gray-900 text-white">
         <Providers>
           {/* Fixed header section with explicit height */}
           <header className="fixed top-0 left-0 w-full bg-gray-900 z-50 h-14">
-            <SearchInput />
+            <SearchInput categories={categories} />
           </header>
 
           {/* Main content with padding matching header height */}
