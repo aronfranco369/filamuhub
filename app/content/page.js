@@ -1,11 +1,13 @@
 "use client";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import DrawerContent from "../components/DrawerContent";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function ContentPage() {
+// Create a client component that uses useSearchParams
+function ContentPageClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -34,5 +36,20 @@ export default function ContentPage() {
         <DrawerContent country={country} type={type} />
       </div>
     </div>
+  );
+}
+
+// Main page component that wraps the client component in Suspense
+export default function ContentPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center text-white p-4">
+          <p>Loading...</p>
+        </div>
+      }
+    >
+      <ContentPageClient />
+    </Suspense>
   );
 }
