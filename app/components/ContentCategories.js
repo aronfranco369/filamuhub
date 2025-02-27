@@ -28,19 +28,20 @@ const ContentSection = ({ title, items, showViewMore = false, type }) => (
       </div>
     </div>
     {showViewMore && (
-      <Link
-        href={`/category/${type}`}
-        className="block mt-4 text-center py-2 px-4 bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white rounded-md transition-all duration-300 w-full shadow-sm"
-      >
-        Onyesha zaidi
-      </Link>
+      <div className="py-2">
+        <Link
+          href={`/category/${type}`}
+          className="block text-center py-2 px-4 bg-gradient-to-r from-blue-900 to-purple-900 hover:from-blue-800 hover:to-purple-800 text-white font-medium rounded-md transition-all duration-300 w-full shadow-md border border-blue-700"
+        >
+          Onyesha zaidi
+        </Link>
+      </div>
     )}
   </section>
 );
 
 async function ContentCategories() {
   const categorizedContent = await fetchCategorizedContent();
-
   const sections = [
     {
       title: "Sizoni Mpya",

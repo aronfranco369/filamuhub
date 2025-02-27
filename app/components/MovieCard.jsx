@@ -64,10 +64,10 @@ const MovieCard = ({
             </CardTitle>
           </div>
           {type === "movie" && (
-            <div className="text-xs text-gray-500">Added {uploadTime}</div>
+            <div className="text-xs text-white/70">Added {uploadTime}</div>
           )}
           {type === "series" && latestEpisode && (
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-white/70">
               Added {latestEpisode.title}
               {" · "}
               {formatDistanceToNow(new Date(latestEpisode.created_at), {
