@@ -12,7 +12,7 @@ const CountrySection = ({ country, items, type, onLoadMore, hasMore }) => (
       {country}
     </h2>
     <div className="relative">
-      <div className="grid grid-cols-3 gap-2 sm:gap-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4">
         {items.map((item) => (
           <MovieCard
             key={item.id}
@@ -37,9 +37,7 @@ const CountrySection = ({ country, items, type, onLoadMore, hasMore }) => (
         ONYESHA ZAIDI
       </Button>
     ) : items.length > 0 ? (
-      <p className="text-center text-gray-400 mt-4">
-        -----------Umefika mwisho------------
-      </p>
+      <p className="text-center text-gray-400 mt-4"></p>
     ) : null}
   </section>
 );
@@ -58,7 +56,6 @@ const CountryContentSection = ({ type }) => {
     queryFn: async () => {
       try {
         const data = await fetchContentByCountry({ type, offset: 0, limit: 6 });
-        console.log("Fetched data:", data);
         return data;
       } catch (error) {
         console.error("Query error:", error);
